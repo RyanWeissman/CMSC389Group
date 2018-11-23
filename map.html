@@ -5,25 +5,42 @@
     <title>Map</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"> 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="stylesheet.css">
   </head>
   <body >
   	<!-- TODO BOOTSTRAP Nav bar -->
 
-  	<!-- TODO scale with screen size and add canvas overtop -->
+  	<!-- TODO scale with screen size -->
   	<canvas id="mapCanvas" width="960" height="700"></canvas>
 
-      
+    <div id="popup" class="popup">
+      <div class="popup-content">
+        <span class="close">&times;</span>
+        <div id="location-info">
+        </div>
+      </div>
+    </div>
+          
   	<script>
-
-
+      var popup = document.getElementById('popup');
+      var close = document.getElementsByClassName("close")[0];
+      var info = document.getElementById("location-info");
+      close.onclick = function() {
+        popup.style.display = "none";
+      }
+      window.onclick = function(event) {
+        if (event.target == popup) {
+          popup.style.display = "none";
+        }
+      }
 
   		var cx = document.querySelector("canvas").getContext("2d");
   		var img = document.createElement("img");
-  		img.src = "map.png";
+  		img.src = "map.jpg";
   		img.addEventListener("load", function() { 
   			cx.drawImage(img, 0, 0);
   		});
-      // TODO replace canvas with html img and map
+
   		var mapCanvas = document.getElementById("mapCanvas");
   		mapCanvas.addEventListener("mousedown", function(event){
   			console.log("canvas clicked at (" + event.pageX + ", " + event.pageY + ")")
@@ -33,11 +50,13 @@
   				coord = coordinates[i];
   				if(x >= coord[0] && x < coord[1] && y >= coord[2] && y < coord[3]){
   					
-  					cx.fillStyle="lightgreen"
-  					cx.fillRect(coord[0], coord[2], coord[1]-coord[0], coord[3]-coord[2]);
+  					// cx.fillStyle="lightgreen"
+  					// cx.fillRect(coord[0], coord[2], coord[1]-coord[0], coord[3]-coord[2]);
 
- 					alert("location is section " + i);
-  					//TODO launch popup with database info from here
+            popup.style.display = "block";
+            info.innerHTML = "Location is section " + i;
+  					//TODO fill popup with database info
+
   					return i;
   				}
   			}
@@ -47,7 +66,7 @@
   		let coordinates = [
   			[80, 325, 20, 175],
   			[80, 325, 175, 520],
-  			[z80, 325, 520, 670],
+  			[80, 325, 520, 670],
   			[325, 915, 20, 175],
   			[325, 710, 175, 340],
   			[325, 500, 340, 670],
