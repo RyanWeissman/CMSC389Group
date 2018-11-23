@@ -23,11 +23,10 @@
   		img.addEventListener("load", function() { 
   			cx.drawImage(img, 0, 0);
   		});
-
+      // TODO replace canvas with html img and map
   		var mapCanvas = document.getElementById("mapCanvas");
   		mapCanvas.addEventListener("mousedown", function(event){
-  			console.log("canvas clicked at (" + event.pageX + ", " + event.pageY + ")") //WEIRD ERROR, coords realtive to screen not to canvas
-
+  			console.log("canvas clicked at (" + event.pageX + ", " + event.pageY + ")")
   			let x = event.pageX
   			let y = event.pageY
   			for(let i = 0; i < coordinates.length; i++){
