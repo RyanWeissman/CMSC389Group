@@ -13,10 +13,42 @@
   	<!-- TODO scale with screen size -->
   	<canvas id="mapCanvas" width="960" height="700"></canvas>
 
-    <div id="popup" class="popup">
+    <div id="popup" class="popup" <?php 
+      if(isset(_GET["location"])){
+        echo "style='display:none'";
+      }else{
+
+        echo "style='display:block'";
+      }
+    ?>> 
       <div class="popup-content">
         <span class="close">&times;</span>
         <div id="location-info">
+          <table id='table' class='table'>
+              <?php
+                echo "<thead><tr>
+                  <th scope\"col\">Name</th>
+                  <th scope\"col\">Grade (Rating)</th>
+                  <th scope\"col\">Color</th>
+                  <th scope\"col\">Setter</th>
+                  <th scope\"col\">Date</th>
+                  <th scope\"col\">Review</th></tr></thead>";
+                //TODO make connectection and fill data.
+                $sql = "SELECT c.name, c.grade, c.color, c.setter, c.date, AVG(r.grade) FROM climbs AS c, reviews AS r WHERE c.location == " . location . "and c.name = r.name";
+                echo "<tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td></tr>";
+
+
+                echo "</table>";              
+              ?>
+            </thead>
+
+          </table>
         </div>
       </div>
     </div>
@@ -52,11 +84,10 @@
   					
   					// cx.fillStyle="lightgreen"
   					// cx.fillRect(coord[0], coord[2], coord[1]-coord[0], coord[3]-coord[2]);
-
-            popup.style.display = "block";
-            info.innerHTML = "Location is section " + i;
+            // popup.style.display = "block";
+            // info.innerHTML = "Location is section " + i;
   					//TODO fill popup with database info
-
+            window.location='map.php?location=' + i
   					return i;
   				}
   			}
