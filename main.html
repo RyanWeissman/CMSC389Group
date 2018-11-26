@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   <body>
-  
 
 
   <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="post">
@@ -37,23 +36,52 @@
       </div>
   </form>
   <?php
-    if(isset($_POST['submit']))
-    {
-      $id = trim($_POST['id']);
-      $pass = trim($_POST['password']);
-      $valid_id = 'testudo';
-      $valid_pass = 'terps';
-      if($id == $valid_id && $pass == $valid_pass)
-      {
-          $_SESSION['id'] = $id;
-          $_SESSION['count'] = 0;
-          header('Location: map.html');
+
+    $host = "localhost";
+    $user = "dbuser";
+    $password = "goodbyeWorld";
+    $database = "climbingdb";
+    $table = "users";
+
+    $db_connection = new mysqli($host, $user, $password, $database);
+    if ($db_connection->connect_error) {
+      die($db_connection->connect_error);
+    } 
+    else {
+      $firstName = "manan";
+      $lastName = "Bhalodia";
+      $level = 5;
+      $email = trim($_POST["id"]);
+      $password = password_hash(trim($_POST["password"]), PASSWORD_DEFAULT);
+      $query = "Insert into applicants (fistName, lastName email, password, level) values ('$firstName', '$lastName', '$email', '$level', $password')";
+      $result = $db_connection->query($query);
+      if ($result) {
+            echo "<h3>The following entry has been added to the database</h3>";
+      } 
+      else {           
+        echo "<h3>Insertion failed: ".$db_connection->error."</h3>";
       }
-      else
-      {
-        echo "<h6>Invalid login information provided</h6>";
-      }
+      $db_connection->close();
+      echo generatePage($body);
     }
+
+    // if(isset($_POST['submit']))
+    // {
+    //   $id = trim($_POST['id']);
+    //   $pass = trim($_POST['password']);
+    //   $valid_id = 'testudo';
+    //   $valid_pass = 'terps';
+    //   if($id == $valid_id && $pass == $valid_pass)
+    //   {
+    //       $_SESSION['id'] = $id;
+    //       $_SESSION['count'] = 0;
+    //       header('Location: map.html');
+    //   }
+    //   else
+    //   {
+    //     echo "<h6>Invalid login information provided</h6>";
+    //   }
+    // }
   
   ?>
   </body>
