@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Nov 26, 2018 at 06:09 PM
+-- Generation Time: Nov 26, 2018 at 10:02 PM
 -- Server version: 5.7.23
 -- PHP Version: 7.2.8
 
@@ -35,7 +35,8 @@ CREATE TABLE `climbs` (
 --
 
 INSERT INTO `climbs` (`name`, `grade`, `color`, `setter`, `date`, `location`, `image`) VALUES
-('My First Climb', 4, '', 'Ryan W.', '2018-10-29', 4, 'test.jpg');
+('Climb 2', 7, 'Green', 'Bob', '2018-11-26', 4, 'test2.jpg'),
+('Climb1', 4, 'Blue', 'Ryan W.', '2018-10-29', 4, 'test.jpg');
 
 -- --------------------------------------------------------
 
@@ -48,6 +49,14 @@ CREATE TABLE `reviews` (
   `user` varchar(100) NOT NULL,
   `grade` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `reviews`
+--
+
+INSERT INTO `reviews` (`name`, `user`, `grade`) VALUES
+('Climb1', 'test user 1', 3),
+('Climb1', 'Test user 2', 5);
 
 -- --------------------------------------------------------
 
@@ -89,13 +98,6 @@ CREATE TABLE `walls` (
 --
 ALTER TABLE `climbs`
   ADD PRIMARY KEY (`name`);
-
---
--- Indexes for table `reviews`
---
-ALTER TABLE `reviews`
-  ADD PRIMARY KEY (`name`),
-  ADD UNIQUE KEY `user` (`user`);
 
 --
 -- Indexes for table `users`
