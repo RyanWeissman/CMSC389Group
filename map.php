@@ -33,18 +33,32 @@
                   <th scope\"col\">Setter</th>
                   <th scope\"col\">Date</th>
                   <th scope\"col\">Review</th></tr></thead>";
-                //TODO make connectection and fill data.
-                $sql = "SELECT c.name, c.grade, c.color, c.setter, c.date, AVG(r.grade) FROM climbs AS c, reviews AS r WHERE c.location == " . location . "and c.name = r.name";
-                echo "<tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td></tr>";
+                //TODO make connectection and fill data. 
+                $user = 'dbuser';
+                $password = 'goodbyeWorld';
+                $db = 'wall_information';
+                $host = 'localhost';
 
+                $conn = new mysqli(
+                  $host,
+                  $user,
+                  $password,
+                  $db
+                );
+                if($conn->connect_error) {
+                  die('Could not connect: ' . $conn->connect_error);
+                }
 
-                echo "</table>";              
+                $sql = "SELECT c.name, c.grade, c.color, c.setter, c.date, AVG(r.grade) FROM `climbs` AS c, `reviews` AS r WHERE c.location = " . $_GET["location"] . " and c.name = r.name GROUP BY r.name";
+                
+                $result = mysqli_query($conn, $sql);
+                $row = mysqli_fetch_row($result);
+                while($row != null){
+                  echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "  (". $row[5] . ")</td><td>" . $row[2] . "</td><td>" . $row[3] . "</td><td>" . $row[4] . "</td><td>" .  "</td></tr>";
+                  $row = mysqli_fetch_row($result);
+              }
+              echo "</table>";              
+              mysqli_close($conn);
               ?>
             </thead>
 
