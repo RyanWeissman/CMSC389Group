@@ -10,7 +10,7 @@
   $host = "localhost";
   $user = "dbuser";
   $password = "goodbyeWorld";
-  $database = "climbingdb";
+  $database = "wall_information";
   $table = "users";
 
   if (!isset($_POST["login"])) {
