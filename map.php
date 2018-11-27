@@ -21,7 +21,7 @@
               if(!isset($_SESSION['user'])){
                 echo "<li class='nav-item'><a class='nav-link' href='main.php'>Login</a></li>";
               } else {
-                echo "<li class='nav-item'><a class='nav-link' href='#'>" . $_SESSION['user'] . "</a></li><li class='nav-item'><a class='nav-link' href='logout.php'>Logout</a></li>" ;
+                echo "<li class='nav-item'><img class='nav-link' style='height:50px' src='" . $_SESSION['image'] . "'></li><li class='nav-item'><a class='nav-link' href='#'>" . $_SESSION['user'] . "</a></li><li class='nav-item'><a class='nav-link' href='logout.php'>Logout</a></li>" ;
               }
             ?>
           
