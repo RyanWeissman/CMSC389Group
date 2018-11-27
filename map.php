@@ -5,54 +5,53 @@
     <title>Map</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"> 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="stylesheet.css">
+    <link rel="stylesheet" href="map.css">
   </head>
-  <body >
+  <body>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <?php
-            if(!isset($_SESSION['name'])){
-              echo "<a class='nav-link' href='main.php'>Login</a>";
-            } else {
-              echo "<a class='nav-link' href='logout.php'>Logout</a>" ;
-            }
-          ?>
-        </li>
-        <li class="nav-item">
-          <?php
-          if((isset($_SESSION['admin']))){
-            if(($_SESSION['admin']) == 1){ 
-          echo "<a class='nav-link' href='admin.php''>Admin</a>";
-        }
-      } else {
-          echo "<a class='nav-link' href='admin.php''>Admin</a>";
-        }
-          ?>
-        </li>
-      </ul>
-    </div>
+      <a class="navbar-brand" href="#"></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <?php
+              if(!isset($_SESSION['name'])){
+                echo "<a class='nav-link' href='main.php'>Login</a>";
+              } else {
+                echo "<a class='nav-link' href='logout.php'>Logout</a>" ;
+              }
+            ?>
+          </li>
+          <li class="nav-item">
+            <?php
+            if((isset($_SESSION['admin']))){
+              if(($_SESSION['admin']) == 1){ 
+            echo "<a class='nav-link' href='admin.php''>Admin</a>";
+          }
+        } else {
+            echo "<a class='nav-link' href='admin.php''>Admin</a>";
+          }
+            ?>
+          </li>
+        </ul>
+      </div>
     </nav>
 
 
   	<canvas id="mapCanvas" width="960" height="700"></canvas>
 
     <div id="popup" class="popup" 
-    <?php 
-      if(isset($_GET["location"])){
-        echo "style='display:block'";
-      }else{
+      <?php 
+        if(isset($_GET["location"])){
+          echo "style='display:block'";
+        }else{
 
-        echo "style='display:none'";
-      }
-    ?>> 
-      
+          echo "style='display:none'";
+        }
+      ?>>  
       <div class="popup-content">
         <span class="close">&times;</span>
         <div id="location-info">
@@ -117,11 +116,8 @@
                   echo "</tr>";
                   $row = mysqli_fetch_row($result);
               }
-              echo "</table>";              
               mysqli_close($conn);
               ?>
-            </thead>
-
           </table>
         </div>
       </div>
@@ -178,11 +174,7 @@
   			[500, 710, 340, 670],
   			[710, 915, 175, 670]
   		];
-  			
-  		
-  		
-
-  		
+  				
   	</script>
   </body>
 </html>
