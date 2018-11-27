@@ -10,9 +10,13 @@
 	
 	$display = array_values($_POST["display"]);
 	$sort = trim($_POST["sort"]);
-	$condition = $_POST["condition"];
+	$condition = "";
+	$sqlQuery = sprintf("select * from %s ORDER BY $sort", $table);
+	if (isset($_POST["condition"]) && $_POST["condition"] != "") {
+		$condition = $_POST["condition"];
+		$sqlQuery = sprintf("select * from %s WHERE $condition ORDER BY $sort", $table);
+	}
 	
-	$sqlQuery = sprintf("select * from %s WHERE $condition ORDER BY $sort", $table);
 	$result = mysqli_query($db, $sqlQuery);
 	if ($result) {
 		$numberOfRows = mysqli_num_rows($result);
@@ -33,9 +37,9 @@
 				$body .= "</tr>";
 			}
 			$body .= "</table>";
-			$body .= "<input type=button name=back value = 'Return to Main Menu' onclick = \"location.href = 'main.html';\" /><br>";
+			$body .= "<input type=button name=back value = 'Return to Main Menu' onclick = \"location.href = 'map.php';\" /><br>";
 			$body .= "<input type=button name=back value = 'Update Map' onclick = \"location.href = 'updateApp.html';\" /><br>";
-     	}	
+     	}
 		mysqli_free_result($result);
 	}  else {
 		$body = "Retrieving records failed.".mysqli_error($db);

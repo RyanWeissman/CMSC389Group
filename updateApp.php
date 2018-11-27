@@ -47,10 +47,9 @@
 			<strong>Date:</strong><input type= "text" name = "date" id = "date" value = "$date" /><br><br>
 			<strong>Location: </strong><input type= "text" name= "location" id = "location" value = $location /><br><br>
 
-			<input type=submit name=submitInfoButton2 value = "Submit Data"/><br>
-			<input type=button name=back value = "Return to Main Menu" onclick = "location.href = 'map.php';" /><br>
+			<input type='submit' name=submitInfoButton2 value = "Submit Data"/><br>
 		</form>
-				
+		<input onclick="location.href= 'map.php';"" type='button' name='back' value= 'Return to Main Menu'/><br>
 EOBODY;
 	$body = $topPart;
 		mysqli_close($db);
