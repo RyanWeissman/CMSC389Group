@@ -17,28 +17,26 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-          <li class="nav-item">
             <?php
               if(!isset($_SESSION['user'])){
-                echo "<a class='nav-link' href='main.php'>Login</a>";
+                echo "<li class='nav-item'><a class='nav-link' href='main.php'>Login</a></li>";
               } else {
-                echo "<a class='nav-link' href='logout.php'>Logout</a>" ;
+                echo "<li class='nav-item'><a class='nav-link' href='#'>" . $_SESSION['user'] . "</a></li><li class='nav-item'><a class='nav-link' href='logout.php'>Logout</a></li>" ;
               }
             ?>
-          </li>
+          
           <li class='nav-item'>
             <?php
-            if(isset($_SESSION['admin'])){
-              if(($_SESSION['admin']) == 1){ 
-                echo "<a class='nav-link' href='admin.php''>Admin</a>";
-              }
-            } 
+              if(isset($_SESSION['admin'])){
+                if($_SESSION['admin'] == 1){ 
+                  echo "<a class='nav-link' href='admin.php''>Admin</a>";
+                }
+              } 
             ?> 
           </li>
         </ul>
       </div>
     </nav>
-    <?php echo isset($_SESSION['admin']); ?>
   	<canvas id="mapCanvas" width="960" height="700"></canvas>
 
     <div id="popup" class="popup" 
