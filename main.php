@@ -66,7 +66,7 @@ EOFBODY;
           $query = "Insert into users (name, email, admin, password) values ('$name', '$email', '$admin', '$password')";
           $result = $db_connection->query($query);
           if ($result) {
-            $_SESSION['user'] = $name;
+            $_SESSION['user'] = $email;
             $_SESSION['admin'] = $admin;
             header('Location: map.php');
           } 
@@ -120,7 +120,7 @@ EOFBODY;
         if ($result->num_rows > 0) {
           $result = $result->fetch_assoc();
           if (password_verify($_POST["password"], $result["password"])) {
-            $_SESSION['user'] = $name;
+            $_SESSION['user'] = $email;
             $_SESSION['admin'] = $admin;
             header('Location: map.php');
           }
