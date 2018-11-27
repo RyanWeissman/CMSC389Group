@@ -67,7 +67,8 @@ INSERT INTO `reviews` (`name`, `user`, `grade`) VALUES
 CREATE TABLE `users` (
   `email` varchar(100) NOT NULL,
   `password` varchar(64) NOT NULL,
-  `admin` tinyint(1) NOT NULL
+  `admin` tinyint(1) NOT NULL,
+  `image` varchar(200) NOT NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --

@@ -35,6 +35,7 @@
             &nbsp; <input type = "radio" required name = "admin" value = "0" />&nbsp; No
             <input required type= "password" name= "password" id = "password" placeholder="password"/>
             <input required type= "password" name= "verifypassword" id = "verifypassword" placeholder="verify password"/>
+            <input type="file" name="fileToUpload" id="fileToUpload">
             <br></br>
             <input type="submit" name="submitUser" value= "Sign up" />
           </form>
@@ -63,11 +64,13 @@ EOFBODY;
           $email = trim($_POST["email"]);
           $admin = intval($_POST["admin"]);
           $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
-          $query = "Insert into users (name, email, admin, password) values ('$name', '$email', '$admin', '$password')";
+          $imgData = $_POST["fileToUpload"];
+          $query = "Insert into users (name, email, admin, password, image) values ('$name', '$email', '$admin', '$password', '$imgData')";
           $result = $db_connection->query($query);
           if ($result) {
             $_SESSION['user'] = $email;
             $_SESSION['admin'] = $admin;
+            $_SESSION['image'] = $_POST['fileToUpload'];
             header('Location: map.php');
           } 
           else {           
@@ -115,14 +118,17 @@ EOFBODY;
       } 
       else {
         $email = trim($_POST["email"]);
-        $query = "SELECT name, email, password, admin FROM users WHERE users.email='".$email."'";
+        $query = "SELECT name, email, password, admin, image FROM users WHERE users.email='".$email."'";
         $result = $db_connection->query($query);
         if ($result->num_rows > 0) {
           $result = $result->fetch_assoc();
           if (password_verify($_POST["password"], $result["password"])) {
             $_SESSION['user'] = $email;
-            $_SESSION['admin'] = $admin;
+            $_SESSION['admin'] = $result['admin'];
+            $_SESSION['image'] = $result['image'];
             header('Location: map.php');
+            // echo "<img src={$_SESSION['image']} alt='profile pic'>";
+
           }
           else {
             $body = "Passwords do not match!";
