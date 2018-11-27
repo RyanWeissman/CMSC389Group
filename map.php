@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <html lang="en">
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -18,29 +19,26 @@
         <ul class="navbar-nav">
           <li class="nav-item">
             <?php
-              if(!isset($_SESSION['name'])){
+              if(!isset($_SESSION['user'])){
                 echo "<a class='nav-link' href='main.php'>Login</a>";
               } else {
                 echo "<a class='nav-link' href='logout.php'>Logout</a>" ;
               }
             ?>
           </li>
-          <li class="nav-item">
+          <li class='nav-item'>
             <?php
-            if((isset($_SESSION['admin']))){
+            if(isset($_SESSION['admin'])){
               if(($_SESSION['admin']) == 1){ 
-            echo "<a class='nav-link' href='admin.php''>Admin</a>";
-          }
-        } else {
-            echo "<a class='nav-link' href='admin.php''>Admin</a>";
-          }
-            ?>
+                echo "<a class='nav-link' href='admin.php''>Admin</a>";
+              }
+            } 
+            ?> 
           </li>
         </ul>
       </div>
     </nav>
-
-
+    <?php echo isset($_SESSION['admin']); ?>
   	<canvas id="mapCanvas" width="960" height="700"></canvas>
 
     <div id="popup" class="popup" 
@@ -63,7 +61,7 @@
                   <th scope\"col\">Color</th>
                   <th scope\"col\">Setter</th>
                   <th scope\"col\">Date</th>";
-                  if(isset($_SESSION["name"])){
+                  if(isset($_SESSION["user"])){
                     echo "<th scope\"col\">Review</th>";
                   }
                   echo "</tr></thead>";
@@ -95,7 +93,7 @@
                     $rating = $row[1];
                   }
                   echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "  (". number_format((float)$rating, 1, '.', '') . ")</td><td>" . $row[2] . "</td><td>" . $row[3] . "</td><td>" . $row[4] . "</td>";
-                  if(isset($_SESSION["name"])){
+                  if(isset($_SESSION["user"])){
                     echo "<td> <select> 
                         <option value=''>--</option>
                         <option value='0'>0</option>

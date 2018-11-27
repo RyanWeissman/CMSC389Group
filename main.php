@@ -72,7 +72,7 @@ EOFBODY;
           } 
           else {           
             $body = "Insertion failed: ".$db_connection->error;
-            echo "<h2>Sign up failed!</h2>";
+            echo "<h2>Sign up failed!</h2>".$db_connection->error;
           }
           $db_connection->close();
         }
