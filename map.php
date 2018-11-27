@@ -4,6 +4,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
     <title>Map</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"> 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="map.css">
@@ -92,7 +93,7 @@
                   }
                   echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "  (". number_format((float)$rating, 1, '.', '') . ")</td><td>" . $row[2] . "</td><td>" . $row[3] . "</td><td>" . $row[4] . "</td>";
                   if(isset($_SESSION["user"])){
-                    echo "<td> <select> 
+                    echo "<td> <select id=\"myGradeSelect\" onchange=\"myGradeChange(event)\"> 
                         <option value=''>--</option>
                         <option value='0'>0</option>
                         <option value='1'>1</option>
@@ -170,7 +171,23 @@
   			[500, 710, 340, 670],
   			[710, 915, 175, 670]
   		];
-  				
+  		function myGradeChange(event) {
+        var strGrade = event.target.value;
+        var myName = event.target.parentElement.parentElement.children[0].innerText;
+        jQuery.ajax({
+            type: "POST",
+            url: "review_update.php",
+            data: {
+                'grade': strGrade,
+                'name': myName,
+            },
+            cache: false,
+            success: function(response)
+            {
+            //alert("Updated successfully");
+            }
+        });
+    }		
   	</script>
   </body>
 </html>
