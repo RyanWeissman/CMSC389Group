@@ -8,42 +8,43 @@
     <link rel="stylesheet" href="stylesheet.css">
   </head>
   <body >
-  	<!-- TODO BOOTSTRAP Nav bar -->
-     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#"></a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <?php
-        if((isset($_SESSION['name']))){
-        echo "<a class='nav-link' href='main.html'>Login</a>";
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <?php
+            if(!isset($_SESSION['name'])){
+              echo "<a class='nav-link' href='main.php'>Login</a>";
+            } else {
+              echo "<a class='nav-link' href='logout.php'>Logout</a>" ;
+            }
+          ?>
+        </li>
+        <li class="nav-item">
+          <?php
+          if((isset($_SESSION['admin']))){
+            if(($_SESSION['admin']) == 1){ 
+          echo "<a class='nav-link' href='admin.php''>Admin</a>";
+        }
       } else {
-         echo "<a class='nav-link' href='logout.php'>Logout</a>" . $_SESSION['name'];
-      }
-        ?>
-      </li>
-      <li class="nav-item">
-        <?php
-        if((isset($_SESSION['admin']))){
-          if(($_SESSION['admin']) == 1){ 
-        echo "<a class='nav-link' href='admin.php''>Admin</a>";
-      }
-    } else {
-        echo "<a class='nav-link' href='admin.php''>Admin</a>";
-      }
-        ?>
-      </li>
-    </ul>
-  </div>
-</nav>
+          echo "<a class='nav-link' href='admin.php''>Admin</a>";
+        }
+          ?>
+        </li>
+      </ul>
+    </div>
+    </nav>
 
 
   	<canvas id="mapCanvas" width="960" height="700"></canvas>
 
-    <div id="popup" class="popup" <?php 
+    <div id="popup" class="popup" 
+    <?php 
       if(isset($_GET["location"])){
         echo "style='display:block'";
       }else{
@@ -51,6 +52,7 @@
         echo "style='display:none'";
       }
     ?>> 
+      
       <div class="popup-content">
         <span class="close">&times;</span>
         <div id="location-info">
@@ -61,8 +63,11 @@
                   <th scope\"col\">Grade (Rating)</th>
                   <th scope\"col\">Color</th>
                   <th scope\"col\">Setter</th>
-                  <th scope\"col\">Date</th>
-                  <th scope\"col\">Review</th></tr></thead>";
+                  <th scope\"col\">Date</th>";
+                  if(isset($_SESSION["name"])){
+                    echo "<th scope\"col\">Review</th>";
+                  }
+                  echo "</tr></thead>";
 
                 $user = 'dbuser';
                 $password = 'goodbyeWorld';
@@ -90,7 +95,9 @@
                   if(!isset($rating)){
                     $rating = $row[1];
                   }
-                  echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "  (". number_format((float)$rating, 1, '.', '') . ")</td><td>" . $row[2] . "</td><td>" . $row[3] . "</td><td>" . $row[4] . "</td><td> <select> 
+                  echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "  (". number_format((float)$rating, 1, '.', '') . ")</td><td>" . $row[2] . "</td><td>" . $row[3] . "</td><td>" . $row[4] . "</td>";
+                  if(isset($_SESSION["name"])){
+                    echo "<td> <select> 
                         <option value=''>--</option>
                         <option value='0'>0</option>
                         <option value='1'>1</option>
@@ -105,8 +112,9 @@
                         <option value='10'>10</option>
                         <option value='11'>11</option>
                         <option value='12'>12</option>
-                        </select></td></tr>"; //TODO on change, update the logged in users review for this climb
-
+                        </select></td>"; //TODO on change, update the logged in users review for this climb
+                  }
+                  echo "</tr>";
                   $row = mysqli_fetch_row($result);
               }
               echo "</table>";              
