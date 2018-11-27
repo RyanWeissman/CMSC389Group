@@ -9,7 +9,7 @@
   </head>
   <body >
   	<!-- TODO BOOTSTRAP Nav bar -->
-     <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#"></a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -21,7 +21,7 @@
         if((isset($_SESSION['name']))){
         echo "<a class='nav-link' href='main.html'>Login</a>";
       } else {
-         echo "<a class='nav-link' href='logout.php'>Logout</a>" . $_SESSION['name'];
+         echo "<a class='nav-link' href='logout.php'>Logout</a>";
       }
         ?>
       </li>
@@ -29,10 +29,10 @@
         <?php
         if((isset($_SESSION['admin']))){
           if(($_SESSION['admin']) == 1){ 
-        echo "<a class='nav-link' href='admin.php''>Admin</a>";
+        echo "<a class='nav-link' href='adminDisplay.php''>Admin</a>";
       }
     } else {
-        echo "<a class='nav-link' href='admin.php''>Admin</a>";
+        echo "<a class='nav-link' href='adminDisplay.php''>Admin</a>";
       }
         ?>
       </li>
@@ -40,15 +40,15 @@
   </div>
 </nav>
 
-
+  	<!-- TODO scale with screen size -->
   	<canvas id="mapCanvas" width="960" height="700"></canvas>
 
     <div id="popup" class="popup" <?php 
-      if(isset($_GET["location"])){
-        echo "style='display:block'";
+      if(isset(_GET["location"])){
+        echo "style='display:none'";
       }else{
 
-        echo "style='display:none'";
+        echo "style='display:block'";
       }
     ?>> 
       <div class="popup-content">
@@ -63,7 +63,7 @@
                   <th scope\"col\">Setter</th>
                   <th scope\"col\">Date</th>
                   <th scope\"col\">Review</th></tr></thead>";
-
+                //TODO make connectection and fill data. 
                 $user = 'dbuser';
                 $password = 'goodbyeWorld';
                 $db = 'wall_information';
@@ -79,34 +79,12 @@
                   die('Could not connect: ' . $conn->connect_error);
                 }
 
-                $sql = "SELECT c.name, c.grade, c.color, c.setter, c.date FROM `climbs` AS c WHERE c.location = " . $_GET["location"];
-
+                $sql = "SELECT c.name, c.grade, c.color, c.setter, c.date, AVG(r.grade) FROM `climbs` AS c, `reviews` AS r WHERE c.location = " . $_GET["location"] . " and c.name = r.name GROUP BY r.name";
+                
                 $result = mysqli_query($conn, $sql);
                 $row = mysqli_fetch_row($result);
                 while($row != null){
-                  $ratingSql = "SELECT AVG(grade) FROM `reviews` WHERE name = \"" . $row[0] . "\"";
-                  $ratingResult = mysqli_query($conn, $ratingSql);
-                  $rating = mysqli_fetch_row($ratingResult)[0];
-                  if(!isset($rating)){
-                    $rating = $row[1];
-                  }
-                  echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "  (". number_format((float)$rating, 1, '.', '') . ")</td><td>" . $row[2] . "</td><td>" . $row[3] . "</td><td>" . $row[4] . "</td><td> <select> 
-                        <option value=''>--</option>
-                        <option value='0'>0</option>
-                        <option value='1'>1</option>
-                        <option value='2'>2</option>
-                        <option value='3'>3</option>
-                        <option value='4'>4</option>
-                        <option value='5'>5</option>
-                        <option value='6'>6</option>
-                        <option value='7'>7</option>
-                        <option value='8'>8</option>
-                        <option value='9'>9</option>
-                        <option value='10'>10</option>
-                        <option value='11'>11</option>
-                        <option value='12'>12</option>
-                        </select></td></tr>"; //TODO on change, update the logged in users review for this climb
-
+                  echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "  (". $row[5] . ")</td><td>" . $row[2] . "</td><td>" . $row[3] . "</td><td>" . $row[4] . "</td><td>" .  "</td></tr>";
                   $row = mysqli_fetch_row($result);
               }
               echo "</table>";              
